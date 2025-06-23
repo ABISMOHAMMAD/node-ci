@@ -10,7 +10,11 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "boxen": "^8.0.1",
+    "chalk": "^5.4.1",
     "express": "^5.1.0",
+    "figlet": "^1.8.1",
+    "ora": "^8.2.0",
     "prom-client": "^15.1.3"
   }
 }
