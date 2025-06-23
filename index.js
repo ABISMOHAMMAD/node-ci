@@ -1,20 +1,17 @@
-const express = require('express');
-const client = require('prom-client');
-const chalk = require('chalk');
-const ora = require('ora');
-const figlet = require('figlet');
-const boxen = require('boxen');
+import express from 'express';
+import client from 'prom-client';
+import chalk from 'chalk';
+import ora from 'ora';
+import figlet from 'figlet';
+import boxen from 'boxen';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Prometheus metrics registry
 const register = new client.Registry();
-
-// Enable collection of default metrics
 client.collectDefaultMetrics({ register });
 
-// Custom metric: HTTP request counter
 const httpRequestCounter = new client.Counter({
   name: 'http_requests_total',
   help: 'Total number of HTTP requests',
@@ -22,7 +19,6 @@ const httpRequestCounter = new client.Counter({
 });
 register.registerMetric(httpRequestCounter);
 
-// Middleware to track requests
 app.use((req, res, next) => {
   res.on('finish', () => {
     httpRequestCounter.labels(req.method, req.path, res.statusCode).inc();
@@ -30,12 +26,10 @@ app.use((req, res, next) => {
   next();
 });
 
-// Sample API route
 app.get('/', (req, res) => {
   res.json({ message: 'Hello from Node.js with metrics!' });
 });
 
-// Prometheus metrics endpoint
 app.get('/metrics', async (req, res) => {
   try {
     res.set('Content-Type', register.contentType);
@@ -45,12 +39,10 @@ app.get('/metrics', async (req, res) => {
   }
 });
 
-// Health check
 app.get('/healthz', (req, res) => {
   res.send('OK');
 });
 
-// Show startup animation and start server
 const spinner = ora(chalk.blue('🚀 Starting Metrics Server...')).start();
 
 setTimeout(() => {
