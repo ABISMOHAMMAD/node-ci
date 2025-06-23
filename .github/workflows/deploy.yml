@@ -28,7 +28,7 @@ jobs:
       run: |
         git clone https://x-access-token:${{ secrets.DEPLOY_TOKEN }}@github.com/ABISMOHAMMAD/node-app-deploy.git
         cd node-app-deploy
-        sed -i "s|image: abismohammad/node-metrics-app:.*|image: abismohammad/node-metrics-app:${{ env.IMAGE_TAG }}|" deployment.yaml
+        sed -i "s|image: abismohammad/node-metrics-app:.*|image: abismohammad/node-metrics-app:${{ env.IMAGE_TAG }}|" deployment.yml
         git config user.name "CI Bot"
         git config user.email "ci@github.com"
         git commit -am "Update image tag"
