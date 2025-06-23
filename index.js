@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 });
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Hello from Node.js with metrics! with advanced checks'});
+  res.json({ message: 'Hello from Node.js with metrics!'});
 });
 
 app.get('/metrics', async (req, res) => {
